@@ -1,18 +1,16 @@
 "use client";
+import type { Task } from "@/context/useSessionStore";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 import { Button } from "./Button";
-import type { Task } from "@/context/useSessionStore";
 
-
-
-interface SortableRowProps {
-  task: Task;
-  blockDurationMin: number; // <-- needed for duration
-  onChange: (t: Task) => void;
-  onDelete: (id: string) => void;
-}
+// interface SortableRowProps {
+//   task: Task;
+//   blockDurationMin: number; // <-- needed for duration
+//   onChange: (t: Task) => void;
+//   onDelete: (id: string) => void;
+// }
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -78,4 +76,3 @@ export const SortableRow: React.FC<{
     </tr>
   );
 };
-

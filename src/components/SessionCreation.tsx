@@ -38,7 +38,7 @@ export function SessionCreation({
   setProjectInput,
   setCategoryInput,
   createSession,
-  initSample,
+  // initSample,
 }: SessionCreationProps) {
   if (session) return <div>Session active — remove session to create a new one</div>;
   
