@@ -16,8 +16,15 @@ import { Button } from "./Button";
 import { SortableRow } from "./SortableRow";
 
 export function SessionTable() {
-  const { session, updateTask, deleteTask, timer, addEmptyTask, setSession } =
-    useSessionStore();
+  const {
+    session,
+    updateTask,
+    deleteTask,
+    timer,
+    addEmptyTask,
+    setSession,
+    resetTimer,
+  } = useSessionStore();
 
   if (!session) return null;
 
@@ -39,6 +46,7 @@ export function SessionTable() {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="font-medium">{session.name}</h3>
+          <p>Created: {new Date(session.createdAt).toLocaleString()}</p>
           <div className="text-sm text-gray-600">
             {session.project && <span>Project: {session.project} </span>}
             {session.category && <span>• Category: {session.category}</span>}
@@ -51,6 +59,8 @@ export function SessionTable() {
           <Button
             onClick={() => {
               setSession(null);
+              resetTimer();
+
               localStorage.removeItem(LS_KEY);
             }}
             variant="danger"
@@ -121,4 +131,3 @@ export function SessionTable() {
     </div>
   );
 }
-

@@ -112,6 +112,7 @@ export const useSessionStore = create<AppState>((set, get) => ({
     if (session) localStorage.setItem(LS_KEY, JSON.stringify(session));
     else localStorage.removeItem(LS_KEY);
   },
+  
 
   setProjects: (projects) => {
     set({ projects });

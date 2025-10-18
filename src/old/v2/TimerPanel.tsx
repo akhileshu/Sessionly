@@ -8,7 +8,7 @@ export function TimerPanel() {
   const startTimer = useSessionStore((state) => state.startTimer);
   const pauseTimer = useSessionStore((state) => state.pauseTimer);
   const currentTaskIndex = useSessionStore((state) => state.currentTaskIndex);
-  const currentBlockRemainingSec = useSessionStore(
+  const currentBlockRemainingSec = useSessionStore( 
     (state) => state.currentBlockRemainingSec
   );
   const timerType = useSessionStore((state) => state.timerType);

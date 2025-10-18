@@ -4,8 +4,10 @@ import { useSessionStore } from "@/context/useSessionStore";
 import { useEffect, useRef } from "react";
 import { Button } from "./Button";
 import { ExportSessionAsMarkdownButton } from "./exportSessionAsMarkdown";
+import { NotesPreview } from "./NotesPreview";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
+import { StartBreakButton } from "./StartBreakButton";
 
 export default function SessionTracker() {
   const {
@@ -30,7 +32,10 @@ export default function SessionTracker() {
     handleBlockEnd,
     startBreakTimer,
     startWorkTimer,
+    updateTask,
   } = useSessionStore();
+
+  console.log("Zustand state useSessionStore:", useSessionStore());
 
   const timerRef = useRef<number | null>(null);
 
@@ -64,17 +69,7 @@ export default function SessionTracker() {
     setTimerState,
   ]);
 
-  // Manual break start function (for the UI)
-  const handleStartBreak = () => {
-    if (timer.timerType === "break") {
-      // If we're already in break mode and user clicks start, begin the break timer
-      setTimerState({ running: true });
-    } else {
-      // If we're in work mode, manually start a break
-      startBreakTimer();
-      setTimerState({ running: true });
-    }
-  };
+
 
   // Manual work start function (for the UI)
   const handleStartWork = () => {
@@ -109,10 +104,27 @@ export default function SessionTracker() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="border p-2 rounded space-y-2">
-              <h4 className="font-medium">Task Notes (before / after)</h4>
-              <div className="text-sm text-gray-600">
-                Edit task notes in the table by clicking the task title.
-              </div>
+              {timer.currentTaskIndex !== null ? (
+                <div>
+                  <p>before notes</p>
+                  <p>
+                    {session.tasks[timer.currentTaskIndex]?.notesBefore ||
+                      "no before notes"}
+                  </p>
+
+                  <hr />
+                  <p>after notes</p>
+                  <NotesPreview
+                    content={
+                      session.tasks[timer.currentTaskIndex]?.notesAfter ||
+                      "no after notes"
+                    }
+                    noPopup
+                  />
+                </div>
+              ) : (
+                "no running task"
+              )}
             </div>
 
             <div className="border p-2 rounded space-y-2">
@@ -137,9 +149,7 @@ export default function SessionTracker() {
                 ) : (
                   <>
                     {!timer.running ? (
-                      <Button onClick={handleStartBreak} variant="primary">
-                        Start Break
-                      </Button>
+                      <StartBreakButton />
                     ) : (
                       <Button onClick={handleStartPause} variant="primary">
                         Pause Break
