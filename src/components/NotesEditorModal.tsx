@@ -7,8 +7,11 @@ import { Button } from "./Button";
 
 interface NotesEditorModalProps {
   notes: string | undefined;
-  onSave: (val: string) => void;
   title?: string;
+  onSave: (val: string) => void;
+  saveText?: string;
+  onSkip?: () => void;
+  skipText?: string;
   isOpenDefault?: boolean;
 }
 
@@ -17,12 +20,22 @@ export const NotesEditorModal: React.FC<NotesEditorModalProps> = ({
   onSave,
   title = "Add notes",
   isOpenDefault = false,
+  saveText = "Save",
+  onSkip,
+  skipText,
 }) => {
   const [isOpen, setIsOpen] = useState(isOpenDefault);
-  const [draftNotes, setDraftNotes] = useState(notes ?? "");
+  const [draftNotes, setDraftNotes] = useState(
+    notes ?? "### ✅ Done\n- \n\n### ⏳ Pending\n- \n\n### 💡 Ideas\n- "
+  );
 
   const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    setIsOpen(false);
+    setDraftNotes(
+      notes ?? "### ✅ Done\n- \n\n### ⏳ Pending\n- \n\n### 💡 Ideas\n- "
+    );
+  };
 
   const handleSave = () => {
     onSave(draftNotes);
@@ -31,10 +44,7 @@ export const NotesEditorModal: React.FC<NotesEditorModalProps> = ({
 
   return (
     <>
-      <Button
-        onClick={openModal}
-        variant="primary"
-      >
+      <Button onClick={openModal} variant="primary">
         {notes ? "View/Edit notes" : title}
       </Button>
 
@@ -50,19 +60,33 @@ export const NotesEditorModal: React.FC<NotesEditorModalProps> = ({
 
             <MDEditor
               height={400}
-              value={
-                draftNotes ||
-                "### ✅ Done\n- \n\n### ⏳ Pending\n- \n\n### 💡 Ideas\n- "
-              }
+              value={draftNotes}
               onChange={(val) => setDraftNotes(val || "")}
             />
 
             <div className="flex justify-end gap-2">
-              <Button variant="ghost" onClick={closeModal}>
-                Cancel
+              <Button
+                variant="ghost"
+                onClick={() =>
+                  setDraftNotes(
+                    notes ??
+                      "### ✅ Done\n- \n\n### ⏳ Pending\n- \n\n### 💡 Ideas\n- "
+                  )
+                }
+              >
+                reset notes
               </Button>
+              <Button icon="close" variant="ghost" onClick={closeModal}>
+                Close
+              </Button>
+              {onSkip && skipText ? (
+                <Button onClick={onSkip} variant="ghost">
+                  {skipText}
+                </Button>
+              ) : null}
+
               <Button variant="primary" onClick={handleSave}>
-                Save
+                {saveText}
               </Button>
             </div>
           </div>

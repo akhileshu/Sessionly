@@ -28,15 +28,18 @@ export const StartBreakButton: React.FC<StartBreakButtonProps> = ({}) => {
   return (
     <>
       {notesAfter ? (
-        <Button onClick={handleStartBreak} variant="primary">
+        <Button icon="breakfast" onClick={handleStartBreak} variant="primary">
           Start Break
         </Button>
       ) : (
         <NotesEditorModal
           isOpenDefault
           notes={notesAfter}
+          title="Enter notes / Start Break"
+          saveText="Save notes & start break"
           onSave={handleSave}
-          title="add notes to start break"
+          skipText="Skip & Start Break"
+          onSkip={handleStartBreak}
         />
       )}
     </>

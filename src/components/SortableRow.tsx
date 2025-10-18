@@ -9,6 +9,7 @@ import { Button } from "./Button";
 import { Input } from "./input";
 import { NotesEditorModal } from "./NotesEditorModal";
 import { NotesPreview } from "./NotesPreview";
+import { Icon } from "./icons";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -43,7 +44,7 @@ export const SortableRow: React.FC<{
           {...attributes}
           {...listeners}
         >
-          ⠿
+          <Icon name="drag"/>
         </td>
 
         {/* Title */}
@@ -82,7 +83,7 @@ export const SortableRow: React.FC<{
             <Input
               className="bg-transparent outline-none border-b border-gray-300"
               placeholder="Notes before"
-              value={task.notesBefore || ""}
+              value={task.notesBefore}
               onChange={(e) =>
                 onChange({ ...task, notesBefore: e.target.value })
               }
@@ -90,7 +91,7 @@ export const SortableRow: React.FC<{
           ) : (
             <div className="flex flex-col gap-1">
               <NotesEditorModal
-                notes={task.notesAfter || ""}
+                notes={task.notesAfter}
                 onSave={(val) => onChange({ ...task, notesAfter: val })}
               />
 
@@ -122,9 +123,7 @@ export const SortableRow: React.FC<{
 
         {/* Delete */}
         <td className="border px-2 py-1">
-          <Button variant="danger" onClick={() => onDelete(task.id)}>
-            🗑️
-          </Button>
+          <Icon title={`Delete Task - ${task.title}`} onClick={() => onDelete(task.id)} name="delete" />
         </td>
       </tr>
     </>

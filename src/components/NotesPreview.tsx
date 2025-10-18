@@ -15,7 +15,8 @@ export const NotesPreview: React.FC<{
         "absolute left-0 top-full mt-1 w-72 p-3 bg-white text-black border border-gray-300 shadow-lg rounded-lg z-50 text-sm overflow-auto max-h-64",
         {
           static: noPopup,
-        }
+        },
+        className
       )}
     >
       <ReactMarkdown>{content}</ReactMarkdown>

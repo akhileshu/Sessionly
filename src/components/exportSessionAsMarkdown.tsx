@@ -37,7 +37,7 @@ export function ExportSessionAsMarkdownButton() {
     );
   }
   return (
-    <Button onClick={exportSessionAsMarkdown} variant="primary">
+    <Button icon="markdown" onClick={exportSessionAsMarkdown} variant="primary">
       Export Markdown
     </Button>
   );

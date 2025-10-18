@@ -1,6 +1,7 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority";
+import React from "react";
+import { Icon, type IconName } from "./icons";
 
 const buttonVariants = cva(
   "rounded-md text-sm font-medium transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed",
@@ -27,15 +28,22 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  icon?: IconName;
+}
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => (
+  ({ className, variant, size,children, ...props }, ref) => (
     <button
       ref={ref}
-      className={cn(buttonVariants({ variant, size }), className , "")}
+      className={cn(buttonVariants({ variant, size }), className, {
+        "inline-flex align-middle": props.icon,
+      })}
       {...props}
-    />
+    >
+      {props.icon ? <Icon withTooltip={false} className="mr-1" name={props.icon} /> : null}
+      {children}
+    </button>
   )
 );
 Button.displayName = "Button";

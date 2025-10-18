@@ -8,6 +8,8 @@ import { NotesPreview } from "./NotesPreview";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
 import { StartBreakButton } from "./StartBreakButton";
+import { WorkTimerButton } from "./work-timer-button";
+import { TaskNotesSummary } from "./TaskNotesSummary";
 
 export default function SessionTracker() {
   const {
@@ -69,8 +71,6 @@ export default function SessionTracker() {
     setTimerState,
   ]);
 
-
-
   // Manual work start function (for the UI)
   const handleStartWork = () => {
     startWorkTimer();
@@ -103,7 +103,7 @@ export default function SessionTracker() {
           <SessionTable />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <div className="border p-2 rounded space-y-2">
+            {/* <div className="border p-2 rounded space-y-2">
               {timer.currentTaskIndex !== null ? (
                 <div>
                   <p>before notes</p>
@@ -125,7 +125,12 @@ export default function SessionTracker() {
               ) : (
                 "no running task"
               )}
-            </div>
+            </div> */}
+            <TaskNotesSummary
+              hasTask={timer.currentTaskIndex !== null}
+              beforeNotes={session.tasks[timer.currentTaskIndex!]?.notesBefore}
+              afterNotes={session.tasks[timer.currentTaskIndex!]?.notesAfter}
+            />
 
             <div className="border p-2 rounded space-y-2">
               <h4 className="font-medium">Timer</h4>
@@ -139,19 +144,20 @@ export default function SessionTracker() {
 
               <div className="space-x-2">
                 {timer.timerType === "work" ? (
-                  <Button onClick={handleStartPause} variant="primary">
-                    {timer.currentTaskIndex === null
-                      ? "Start Work"
-                      : timer.running
-                      ? "Pause"
-                      : "Resume"}
-                  </Button>
+                  // <Button icon={"MdOutlineWorkOutline"} onClick={handleStartPause} variant="primary">
+                  //   {timer.currentTaskIndex === null
+                  //     ? "Start Work"
+                  //     : timer.running
+                  //     ? "Pause"
+                  //     : "Resume"}
+                  // </Button>
+                  <WorkTimerButton />
                 ) : (
                   <>
                     {!timer.running ? (
                       <StartBreakButton />
                     ) : (
-                      <Button onClick={handleStartPause} variant="primary">
+                      <Button icon="pause" onClick={handleStartPause} variant="primary">
                         Pause Break
                       </Button>
                     )}

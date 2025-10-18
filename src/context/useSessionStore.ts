@@ -56,6 +56,11 @@ type AppState = {
   setCategoryInput: (input: string) => void;
   setBlockDurationMin: (minutes: number) => void;
   setBreakDurationMin: (minutes: number) => void;
+  //
+  removeProject: (project: string) => void;
+  removeCategory: (category: string) => void;
+  clearProjects: () => void;
+  clearCategories: () => void;
 
   // Timer actions
   setTimerState: (state: Partial<TimerState>) => void;
@@ -112,7 +117,6 @@ export const useSessionStore = create<AppState>((set, get) => ({
     if (session) localStorage.setItem(LS_KEY, JSON.stringify(session));
     else localStorage.removeItem(LS_KEY);
   },
-  
 
   setProjects: (projects) => {
     set({ projects });
@@ -141,6 +145,41 @@ export const useSessionStore = create<AppState>((set, get) => ({
   setCategoryInput: (categoryInput) => set({ categoryInput }),
   setBlockDurationMin: (blockDurationMin) => set({ blockDurationMin }),
   setBreakDurationMin: (breakDurationMin) => set({ breakDurationMin }),
+  //
+
+  removeProject: (project: string) => {
+    const { projects, setProjects } = get();
+    const updated = projects.filter((p) => p !== project);
+    setProjects(updated);
+  },
+
+  removeCategory: (category: string) => {
+    const { categories, setCategories } = get();
+    const updated = categories.filter((c) => c !== category);
+    setCategories(updated);
+  },
+
+  clearProjects: () => {
+    set({ projects: [] });
+    localStorage.setItem(
+      LS_META,
+      JSON.stringify({
+        projects: [],
+        categories: get().categories,
+      })
+    );
+  },
+
+  clearCategories: () => {
+    set({ categories: [] });
+    localStorage.setItem(
+      LS_META,
+      JSON.stringify({
+        projects: get().projects,
+        categories: [],
+      })
+    );
+  },
 
   // Timer actions
   setTimerState: (newState) =>

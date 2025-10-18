@@ -14,6 +14,7 @@ import {
 } from "@dnd-kit/sortable";
 import { Button } from "./Button";
 import { SortableRow } from "./SortableRow";
+import { Icon } from "./icons";
 
 export function SessionTable() {
   const {
@@ -53,10 +54,11 @@ export function SessionTable() {
           </div>
         </div>
         <div className="space-x-2">
-          <Button onClick={addEmptyTask} variant="primary">
+          <Button icon="add" onClick={addEmptyTask} variant="primary">
             Add task
           </Button>
           <Button
+            icon="delete"
             onClick={() => {
               setSession(null);
               resetTimer();
@@ -106,7 +108,9 @@ export function SessionTable() {
             </tbody>
             <tfoot className="bg-gray-700 text-white font-medium">
               <tr>
-                <td className="border px-2 py-1">📊</td>
+                <td className="border px-2 py-1">
+                  <Icon name="stats" />
+                </td>
                 <td className="border px-2 py-1">{session.tasks.length}</td>
                 <td className="border px-2 py-1">
                   {session.tasks.reduce((sum, t) => sum + t.blocks, 0)}
