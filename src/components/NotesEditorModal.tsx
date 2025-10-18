@@ -1,7 +1,7 @@
 "use client";
 import "@uiw/react-markdown-preview/markdown.css";
-import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
+import MDEditor from "@uiw/react-md-editor";
 import React, { useState } from "react";
 import { Button } from "./Button";
 

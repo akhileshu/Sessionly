@@ -1,17 +1,18 @@
 "use client";
 
 import { useSessionStore } from "@/context/useSessionStore";
+import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import { Button } from "./Button";
-import { ExportSessionAsMarkdownButton } from "./exportSessionAsMarkdown";
-import { NotesPreview } from "./NotesPreview";
+import { Pill } from "./pill";
+import { SessionAnalyticsModal } from "./session-analytics-modal";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
 import { StartBreakButton } from "./StartBreakButton";
-import { WorkTimerButton } from "./work-timer-button";
 import { TaskNotesSummary } from "./TaskNotesSummary";
+import { WorkTimerButton } from "./work-timer-button";
 
-export default function SessionTracker() {
+export default function SessionTracker({ className }: { className?: string }) {
   const {
     session,
     sessionName,
@@ -37,7 +38,7 @@ export default function SessionTracker() {
     updateTask,
   } = useSessionStore();
 
-  console.log("Zustand state useSessionStore:", useSessionStore());
+  // console.log("Zustand state useSessionStore:", useSessionStore());
 
   const timerRef = useRef<number | null>(null);
 
@@ -77,7 +78,7 @@ export default function SessionTracker() {
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto space-y-4">
+    <div className={cn("p-4  space-y-4 ", className)}>
       <h2 className="text-xl font-semibold">Session Tracker</h2>
 
       <SessionCreation
@@ -133,7 +134,7 @@ export default function SessionTracker() {
             />
 
             <div className="border p-2 rounded space-y-2">
-              <h4 className="font-medium">Timer</h4>
+              <Pill>Timer</Pill>
               <div className="text-sm font-medium">
                 Status:{" "}
                 {timer.timerType === "work" ? "Work Time" : "Break Time"}
@@ -157,7 +158,11 @@ export default function SessionTracker() {
                     {!timer.running ? (
                       <StartBreakButton />
                     ) : (
-                      <Button icon="pause" onClick={handleStartPause} variant="primary">
+                      <Button
+                        icon="pause"
+                        onClick={handleStartPause}
+                        variant="primary"
+                      >
                         Pause Break
                       </Button>
                     )}
@@ -183,7 +188,8 @@ export default function SessionTracker() {
                   .toString()
                   .padStart(2, "0")}
               </div>
-              <ExportSessionAsMarkdownButton />
+              {/* <ExportSessionAsMarkdownButton /> */}
+              <SessionAnalyticsModal />
             </div>
           </div>
         </div>

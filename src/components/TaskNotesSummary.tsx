@@ -1,4 +1,5 @@
 import { NotesPreview } from "./NotesPreview";
+import { Pill } from "./pill";
 
 interface TaskNotesSummaryProps {
   beforeNotes?: string | null;
@@ -16,6 +17,7 @@ export function TaskNotesSummary({
 
   return (
     <div className="border p-3 rounded space-y-3 text-sm">
+      <Pill>Task notes</Pill>
       {beforeNotes ? (
         <div>
           <p className="font-medium text-gray-700 mb-1">Before Notes</p>

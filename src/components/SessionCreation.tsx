@@ -44,7 +44,8 @@ export function SessionCreation({
   
 
   return (
-    <div
+    <form
+      onSubmit={createSession}
       className={cn("p-4 rounded-md border space-y-2", {
         session: "pointer-events-none opacity-50",
       })}
@@ -52,6 +53,7 @@ export function SessionCreation({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <Input
           placeholder="Session name"
+          required
           value={sessionName}
           onChange={(e) => setSessionName(e.target.value)}
         />
@@ -73,7 +75,7 @@ export function SessionCreation({
         <label className="text-sm">Break (min)</label>
         <Input
           type="number"
-          min={0}
+          min={1}
           value={breakDurationMin}
           onChange={(e) =>
             setBreakDurationMin(Math.max(0, Number(e.target.value) || 0))
@@ -92,9 +94,9 @@ export function SessionCreation({
         />
       </div>
 
-      <Button onClick={createSession} variant="primary">
+      <Button type="submit" variant="primary">
         Create Session
       </Button>
-    </div>
+    </form>
   );
 }

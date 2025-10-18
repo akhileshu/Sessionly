@@ -37,7 +37,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     <button
       ref={ref}
       className={cn(buttonVariants({ variant, size }), className, {
-        "inline-flex align-middle": props.icon,
+        "inline-flex align-middle items-center": props.icon,
       })}
       {...props}
     >

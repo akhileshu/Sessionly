@@ -1,11 +1,22 @@
 "use client";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { useSessionStore } from "@/context/useSessionStore";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { AddMetaDialog } from "./AddMetaDialog";
 import { Button } from "./Button";
-import { useSessionStore } from "@/context/useSessionStore";
 import { Icon } from "./icons";
+import { Pill } from "./pill";
 
-export function Sidebar() {
+export function AppSidebar({ className }: { className?: string }) {
   const {
     projects,
     categories,
@@ -13,95 +24,154 @@ export function Sidebar() {
     removeCategory,
     clearProjects,
     clearCategories,
+    initSampleProjectsAndCategories,
   } = useSessionStore();
+
   const [showDialog, setShowDialog] = useState(false);
 
   return (
-    <aside className="w-64 border-r p-4 space-y-5">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h3 className="font-semibold text-lg">Meta</h3>
+    <Sidebar className={cn("w-64 border-r", className)}>
+      <SidebarHeader className="p-3">
+        <SidebarTrigger className="ml-auto" />
         <Button
           onClick={() => setShowDialog(true)}
-          variant="outline"
-          title="Add new meta"
+          variant="primary"
+          icon="add"
+          size="sm"
         >
-          <Icon name="add" />
+          Add Project / Category
         </Button>
-      </div>
+      </SidebarHeader>
 
-      {/* Projects */}
-      <Section
-        title="Projects"
-        items={projects}
-        onDeleteItem={removeProject}
-        onDeleteAll={clearProjects}
-      />
+      <SidebarContent className="space-y-4 px-3">
+        {/* Projects */}
+        <Pill className="w-fit mx-auto mb-0">Projects</Pill>
+        <SidebarGroup title="Projects">
+          {projects.length === 0 ? (
+            <p className="text-sm text-gray-500">No projects</p>
+          ) : (
+            projects.map((project) => (
+              <div
+                key={project}
+                className="flex justify-between items-center px-2 py-1 hover:bg-gray-800 rounded"
+              >
+                <span>{project}</span>
+                <Icon
+                  name="delete"
+                  size={16}
+                  className="cursor-pointer text-gray-500 hover:text-red-500"
+                  onClick={() => removeProject(project)}
+                  title={`Delete ${project}`}
+                />
+              </div>
+            ))
+          )}
+          {projects.length > 0 && (
+            <Button
+              variant="danger"
+              size="sm"
+              icon="delete"
+              onClick={clearProjects}
+            >
+              Delete All
+            </Button>
+          )}
+        </SidebarGroup>
 
-      {/* Categories */}
-      <Section
-        title="Categories"
-        items={categories}
-        onDeleteItem={removeCategory}
-        onDeleteAll={clearCategories}
-      />
+        {/* Categories */}
+        <Pill className="w-fit mx-auto mb-0">Categories</Pill>
+        <SidebarGroup title="Categories">
+          {categories.length === 0 ? (
+            <p className="text-sm text-gray-500">No categories</p>
+          ) : (
+            categories.map((category) => (
+              <div
+                key={category}
+                className="flex justify-between items-center px-2 py-1 hover:bg-gray-800 rounded"
+              >
+                <span>{category}</span>
+                <Icon
+                  name="delete"
+                  size={16}
+                  className="cursor-pointer text-gray-500 hover:text-red-500"
+                  onClick={() => removeCategory(category)}
+                  title={`Delete ${category}`}
+                />
+              </div>
+            ))
+          )}
+          {categories.length > 0 && (
+            <Button
+              variant="danger"
+              size="sm"
+              icon="delete"
+              onClick={clearCategories}
+            >
+              Delete All
+            </Button>
+          )}
+        </SidebarGroup>
+      </SidebarContent>
 
-      {showDialog && <AddMetaDialog onClose={() => setShowDialog(false)} />}
-    </aside>
+      <SidebarFooter className="p-3">
+        {showDialog && <AddMetaDialog onClose={() => setShowDialog(false)} />}
+        {!projects.length && !categories.length && (
+          <Button
+            onClick={initSampleProjectsAndCategories}
+            variant="primary"
+            icon="add"
+            size="sm"
+          >
+            Add Sample Projects & Categories
+          </Button>
+        )}
+        <Social />
+      </SidebarFooter>
+    </Sidebar>
   );
 }
 
-/* ---------------------------------------- */
-/* Reusable Section Component */
-/* ---------------------------------------- */
-function Section({
-  title,
-  items,
-  onDeleteItem,
-  onDeleteAll,
-}: {
-  title: string;
-  items: string[];
-  onDeleteItem: (name: string) => void;
-  onDeleteAll: () => void;
-}) {
+function Social({ className }: { className?: string }) {
   return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <h4 className="font-medium">{title}</h4>
-        {items.length > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onDeleteAll}
-            className="text-xs text-red-500 hover:text-red-600"
-          >
-            Delete All
-          </Button>
-        )}
-      </div>
-
-      {items.length === 0 ? (
-        <p className="text-sm text-gray-500">No {title.toLowerCase()}</p>
-      ) : (
-        <ul className="text-sm space-y-1">
-          {items.map((item) => (
-            <li
-              key={item}
-              className="flex justify-between items-center border rounded px-2 py-1 hover:bg-gray-50"
-            >
-              <span>{item}</span>
-              <Icon
-                name="delete"
-                size={18}
-                className="cursor-pointer text-gray-500 hover:text-red-500"
-                onClick={() => onDeleteItem(item)}
-                title={`Delete ${item}`}
-              />
-            </li>
-          ))}
-        </ul>
+    <div
+      className={cn(
+        "flex items-center justify-around text-muted-foreground",
+        className
       )}
+    >
+      <a
+        href="https://github.com/akhileshu/Sessionly"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-foreground transition-colors"
+        title="GitHub"
+      >
+        <Icon title="star this repo on GitHub" name="github" />
+      </a>
+
+      <a
+        href="https://akhilesh-portfolio-zeta.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-foreground transition-colors"
+        title="Portfolio"
+      >
+        <Icon title="my portfolio - Akhilesh Upadhyay" name="globe" />
+      </a>
+
+      <a
+        href="mailto:umapati4381@gmail.com"
+        className="hover:text-foreground transition-colors"
+        title="Email"
+      >
+        <Icon title="Email me @ umapati4381@gmail.com" name="envelope" />
+      </a>
+
+      <a title="Hyderabad" target="_blank" rel="noopener noreferrer">
+        <Icon title="Hyderabad" name="location" />
+      </a>
     </div>
   );
 }
+
+export default Social;
