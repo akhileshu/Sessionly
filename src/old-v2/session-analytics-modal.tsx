@@ -4,7 +4,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import "@uiw/react-md-editor/markdown-editor.css";
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Button } from "./Button";
+import { Button } from "../components/Button";
 
 
 interface SessionAnalyticsModalProps {

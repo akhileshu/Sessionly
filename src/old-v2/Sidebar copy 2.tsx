@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
-import { AddMetaDialog } from "./AddMetaDialog";
-import { Button } from "./Button";
 import { useSessionStore } from "@/context/useSessionStore";
-import { Icon } from "./icons";
+import { useState } from "react";
+import { Button } from "../components/Button";
+import { Icon } from "../components/icons";
+import { AddMetaDialog } from "./AddMetaDialog";
 
 export function Sidebar() {
   const {
@@ -12,7 +12,8 @@ export function Sidebar() {
     removeProject,
     removeCategory,
     clearProjects,
-    clearCategories,initSampleProjectsAndCategories
+    clearCategories,
+    initSampleProjectsAndCategories,
   } = useSessionStore();
   const [showDialog, setShowDialog] = useState(false);
 

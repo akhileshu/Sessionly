@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
-import { AddMetaDialog } from "./AddMetaDialog";
-import { Button } from "./Button";
 import { useSessionStore } from "@/context/useSessionStore";
+import { useState } from "react";
+import { Button } from "../components/Button";
+import { AddMetaDialog } from "./AddMetaDialog";
 
 export function Sidebar() {
   const { projects, categories } = useSessionStore();

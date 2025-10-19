@@ -6,9 +6,9 @@ import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 
 import { cn } from "@/lib/utils";
+import { AppModal } from "./app-model/app-model";
 import { Icon } from "./icons";
 import { Input } from "./input";
-import { NotesEditorModal } from "./NotesEditorModal";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -105,10 +105,13 @@ export const SortableRow: React.FC<{
               className="bg-transparent outline-none border-b w-fit"
             />
           ) : (
-            <NotesEditorModal
-              title="add after end notes"
-              notes={task.notesAfter}
-              onSave={(val) => onChange({ ...task, notesAfter: val })}
+            <AppModal
+              trigger={
+                task.notesAfter ? "View/Edit notes" : "add after end notes"
+              }
+              taskNotes={task.notesAfter}
+              type="AddTaskCompletedNotes"
+              onSaveNotes={(val) => onChange({ ...task, notesAfter: val })}
             />
           )}
         </td>

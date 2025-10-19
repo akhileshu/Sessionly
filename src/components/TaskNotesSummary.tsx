@@ -1,4 +1,4 @@
-import { NotesPreview } from "./NotesPreview";
+import { MarkdownViewer } from "./app-model/MarkdownViewer";
 import { Pill } from "./pill";
 
 interface TaskNotesSummaryProps {
@@ -32,7 +32,7 @@ export function TaskNotesSummary({
       {afterNotes ? (
         <div>
           <p className="font-medium text-gray-700 mb-1">After Notes</p>
-          <NotesPreview className="w-full" content={afterNotes} noPopup />
+          <MarkdownViewer md={afterNotes} />
         </div>
       ) : (
         <p>No after notes</p>

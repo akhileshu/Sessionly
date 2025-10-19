@@ -741,6 +741,7 @@ function notify(type: "breakCompleted" | "taskCompleted") {
     console.log("Stopping audio");
     audioStopped = true;
 
+    // @ts-expect-error : intervalId used before initialization
     if (intervalId) {
       clearInterval(intervalId);
     }

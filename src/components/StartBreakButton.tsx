@@ -2,7 +2,7 @@
 import { useSessionStore } from "@/context/useSessionStore";
 import React from "react";
 import { Button } from "./Button";
-import { NotesEditorModal } from "./NotesEditorModal";
+import { AppModal } from "./app-model/app-model";
 
 interface StartBreakButtonProps {}
 
@@ -32,14 +32,17 @@ export const StartBreakButton: React.FC<StartBreakButtonProps> = ({}) => {
           Start Break
         </Button>
       ) : (
-        <NotesEditorModal
+        <AppModal
           isOpenDefault
-          notes={notesAfter}
-          title="Enter notes / Start Break"
-          saveText="Save notes & start break"
-          onSave={handleSave}
-          skipText="Skip & Start Break"
-          onSkip={handleStartBreak}
+          trigger="Enter notes / Start Break"
+          onSaveNotes={handleSave}
+          // todo
+          // saveText="Save notes & start break"
+          type="AddTaskCompletedNotes"
+          skipButton={{
+            text: "Skip & Start Break",
+            onClick: handleStartBreak,
+          }}
         />
       )}
     </>

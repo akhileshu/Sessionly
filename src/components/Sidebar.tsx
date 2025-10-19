@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useSessionStore } from "@/context/useSessionStore";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { AddMetaDialog } from "./AddMetaDialog";
+import { AppModal } from "./app-model/app-model";
 import { Button } from "./Button";
 import { Icon } from "./icons";
 import { Pill } from "./pill";
@@ -27,20 +26,14 @@ export function AppSidebar({ className }: { className?: string }) {
     initSampleProjectsAndCategories,
   } = useSessionStore();
 
-  const [showDialog, setShowDialog] = useState(false);
-
   return (
     <Sidebar className={cn("w-64 border-r", className)}>
       <SidebarHeader className="p-3">
         <SidebarTrigger className="ml-auto" />
-        <Button
-          onClick={() => setShowDialog(true)}
-          variant="primary"
-          icon="add"
-          size="sm"
-        >
-          Add Project / Category
-        </Button>
+        <AppModal
+          trigger="Add Project / Category"
+          type="addProjectAndCategory"
+        />
       </SidebarHeader>
 
       <SidebarContent className="space-y-4 px-3">
@@ -114,7 +107,6 @@ export function AppSidebar({ className }: { className?: string }) {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
-        {showDialog && <AddMetaDialog onClose={() => setShowDialog(false)} />}
         {!projects.length && !categories.length && (
           <Button
             onClick={initSampleProjectsAndCategories}

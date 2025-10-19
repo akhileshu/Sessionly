@@ -5,11 +5,10 @@ import { CSS } from "@dnd-kit/utilities";
 
 import React from "react";
 
-import { Button } from "./Button";
-import { Input } from "./input";
+import { Icon } from "../components/icons";
+import { Input } from "../components/input";
 import { NotesEditorModal } from "./NotesEditorModal";
 import { NotesPreview } from "./NotesPreview";
-import { Icon } from "./icons";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -37,14 +36,14 @@ export const SortableRow: React.FC<{
         ref={setNodeRef}
         style={style}
         className={`transition-colors ${isCurrent ? "bg-purple-400" : ""}`}
-      > 
+      >
         {/* Drag handle */}
         <td
           className="border px-2 py-1 cursor-grab"
           {...attributes}
           {...listeners}
         >
-          <Icon name="drag"/>
+          <Icon name="drag" />
         </td>
 
         {/* Title */}
@@ -123,7 +122,11 @@ export const SortableRow: React.FC<{
 
         {/* Delete */}
         <td className="border px-2 py-1">
-          <Icon title={`Delete Task - ${task.title}`} onClick={() => onDelete(task.id)} name="delete" />
+          <Icon
+            title={`Delete Task - ${task.title}`}
+            onClick={() => onDelete(task.id)}
+            name="delete"
+          />
         </td>
       </tr>
     </>

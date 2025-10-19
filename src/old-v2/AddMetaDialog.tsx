@@ -1,14 +1,11 @@
 "use client";
 import { useSessionStore } from "@/context/useSessionStore";
 import { useState } from "react";
-import { Button } from "./Button";
-import { Input } from "./input";
+import { Button } from "../components/Button";
+import { Input } from "../components/input";
 
 export function AddMetaDialog({ onClose }: { onClose: () => void }) {
-  const {
-    addProject,
-    addCategory,
-  } = useSessionStore();
+  const { addProject, addCategory } = useSessionStore();
   const [project, setProject] = useState("");
   const [category, setCategory] = useState("");
 
