@@ -1,8 +1,8 @@
 "use client";
 import { useSessionStore } from "@/context/useSessionStore";
 import React from "react";
-import { Button } from "./Button";
 import { AppModal } from "./app-model/app-model";
+import { Button } from "./shared/Button";
 
 interface StartBreakButtonProps {}
 
@@ -33,6 +33,7 @@ export const StartBreakButton: React.FC<StartBreakButtonProps> = ({}) => {
         </Button>
       ) : (
         <AppModal
+          taskNotes=""
           isOpenDefault
           trigger="Enter notes / Start Break"
           onSaveNotes={handleSave}

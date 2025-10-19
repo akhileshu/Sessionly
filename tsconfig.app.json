@@ -30,5 +30,5 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src"],
-  "exclude": ["src/old"]
+  "exclude": ["temp"]
 }

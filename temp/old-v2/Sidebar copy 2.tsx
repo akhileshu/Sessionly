@@ -1,8 +1,8 @@
 "use client";
 import { useSessionStore } from "@/context/useSessionStore";
 import { useState } from "react";
-import { Button } from "../components/Button";
-import { Icon } from "../components/icons";
+import { Button } from "../components/shared/Button";
+import { Icon } from "../components/shared/icons";
 import { AddMetaDialog } from "./AddMetaDialog";
 
 export function Sidebar() {

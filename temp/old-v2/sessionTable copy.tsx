@@ -12,9 +12,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Button } from "../components/Button";
+import { Button } from "../components/shared/Button";
+import { Icon } from "../components/shared/icons";
 import { SortableRow } from "../components/SortableRow";
-import { Icon } from "../components/icons";
 
 export function SessionTable() {
   const {

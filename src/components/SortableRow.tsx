@@ -7,8 +7,8 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import { AppModal } from "./app-model/app-model";
-import { Icon } from "./icons";
-import { Input } from "./input";
+import { Icon } from "./shared/icons";
+import { Input } from "./shared/input";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -30,15 +30,6 @@ export const SortableRow: React.FC<{
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
   const style = { transform: CSS.Transform.toString(transform), transition };
-
-  const handleTagChange = (value: string) =>
-    onChange({
-      ...task,
-      tags: value
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-    });
 
   return (
     <>
@@ -109,7 +100,7 @@ export const SortableRow: React.FC<{
               trigger={
                 task.notesAfter ? "View/Edit notes" : "add after end notes"
               }
-              taskNotes={task.notesAfter}
+              taskNotes={task.notesAfter ?? ""}
               type="AddTaskCompletedNotes"
               onSaveNotes={(val) => onChange({ ...task, notesAfter: val })}
             />

@@ -1,9 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button } from "./Button";
 import { CategoryProjectSelect } from "./CategoryProjectSelect";
-import { Input } from "./input";
+import { Button } from "./shared/Button";
+import { Input } from "./shared/input";
 
 interface SessionCreationProps {
   session: any;
@@ -38,10 +38,10 @@ export function SessionCreation({
   setProjectInput,
   setCategoryInput,
   createSession,
-  // initSample,
-}: SessionCreationProps) {
-  if (session) return <div>Session active — remove session to create a new one</div>;
-  
+}: // initSample,
+SessionCreationProps) {
+  if (session)
+    return <div>Session active — remove session to create a new one</div>;
 
   return (
     <form

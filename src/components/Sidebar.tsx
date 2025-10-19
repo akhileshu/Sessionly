@@ -11,9 +11,9 @@ import {
 import { useSessionStore } from "@/context/useSessionStore";
 import { cn } from "@/lib/utils";
 import { AppModal } from "./app-model/app-model";
-import { Button } from "./Button";
-import { Icon } from "./icons";
-import { Pill } from "./pill";
+import { Button } from "./shared/Button";
+import { Icon } from "./shared/icons";
+import { Pill } from "./shared/pill";
 
 export function AppSidebar({ className }: { className?: string }) {
   const {

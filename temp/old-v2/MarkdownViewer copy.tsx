@@ -2,7 +2,7 @@
 import "@uiw/react-markdown-preview/markdown.css";
 import "@uiw/react-md-editor/markdown-editor.css";
 import ReactMarkdown from "react-markdown";
-import { Button } from "../components/Button";
+import { Button } from "../components/shared/Button";
 
 export const MarkdownViewer = ({ md, onCopy }: any) => (
   <>

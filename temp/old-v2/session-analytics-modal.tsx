@@ -4,14 +4,13 @@ import "@uiw/react-markdown-preview/markdown.css";
 import "@uiw/react-md-editor/markdown-editor.css";
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Button } from "../components/Button";
+import { Button } from "../components/shared/Button";
 
+interface SessionAnalyticsModalProps {}
 
-interface SessionAnalyticsModalProps {
-
-}
-
-export const SessionAnalyticsModal: React.FC<SessionAnalyticsModalProps> = ({}) => {
+export const SessionAnalyticsModal: React.FC<
+  SessionAnalyticsModalProps
+> = ({}) => {
   const { session } = useSessionStore();
   function getMarkdown() {
     if (!session) return;
@@ -47,8 +46,8 @@ export const SessionAnalyticsModal: React.FC<SessionAnalyticsModalProps> = ({}) 
       () => alert("Failed to copy to clipboard.")
     );
   }
-  const md= getMarkdown();
-  if(!md) return null;
+  const md = getMarkdown();
+  if (!md) return null;
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);

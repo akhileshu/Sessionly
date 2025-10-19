@@ -33,7 +33,7 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size,children, ...props }, ref) => (
+  ({ className, variant, size, children, ...props }, ref) => (
     <button
       ref={ref}
       className={cn(buttonVariants({ variant, size }), className, {
@@ -41,7 +41,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       })}
       {...props}
     >
-      {props.icon ? <Icon withTooltip={false} className="mr-1" name={props.icon} /> : null}
+      {props.icon ? (
+        <Icon withTooltip={false} className="mr-1" name={props.icon} />
+      ) : null}
       {children}
     </button>
   )

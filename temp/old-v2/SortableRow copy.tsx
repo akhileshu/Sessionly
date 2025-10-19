@@ -5,8 +5,8 @@ import { CSS } from "@dnd-kit/utilities";
 
 import React from "react";
 
-import { Icon } from "../components/icons";
-import { Input } from "../components/input";
+import { Icon } from "../components/shared/icons";
+import { Input } from "../components/shared/input";
 import { NotesEditorModal } from "./NotesEditorModal";
 import { NotesPreview } from "./NotesPreview";
 

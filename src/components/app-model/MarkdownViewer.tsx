@@ -1,23 +1,38 @@
 "use client";
-import "@uiw/react-markdown-preview/markdown.css";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import { Button } from "../Button";
+import "@uiw/react-markdown-preview/markdown.css";
+import "@uiw/react-md-editor/markdown-editor.css";
+import React from "react";
+import { Button } from "../shared/Button";
 
 interface MarkdownViewerProps {
   md: string;
-  onCopy?: () => void;
+  showMdCopyButton?: boolean;
 }
 
-export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ md, onCopy }) => (
-  <div className="flex flex-col gap-3 ">
-    <MarkdownPreview
-      source={md}
-      className="bg-gray-50 dark:bg-gray-900 max-h-[30rem] overflow-auto p-4 border rounded-md border-gray-400"
-    />
-    {onCopy ? (
-      <Button variant="primary" onClick={onCopy}>
-        Copy to clipboard
-      </Button>
-    ) : null}
-  </div>
-);
+export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
+  md,
+  showMdCopyButton,
+}) => {
+  return (
+    <div className="flex flex-col gap-3 ">
+      <MarkdownPreview
+        source={md}
+        className="bg-gray-50 dark:bg-gray-900 max-h-[30rem] overflow-auto p-4 border rounded-md border-gray-400"
+      />
+      {showMdCopyButton ? (
+        <Button
+          variant="primary"
+          onClick={() => {
+            navigator.clipboard.writeText(md).then(
+              () => alert("Markdown copied!"),
+              () => alert("Failed to copy.")
+            );
+          }}
+        >
+          Copy to clipboard
+        </Button>
+      ) : null}
+    </div>
+  );
+};

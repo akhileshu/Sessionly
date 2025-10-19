@@ -1,6 +1,6 @@
-import type { Session } from "@/context/useSessionStore";
+import { type Session } from "@/context/useSessionStore";
 
-export const getSessionMarkdown = (session: Session|null) => {
+export const getSessionMarkdown = (session: Session | null) => {
   if (!session) return "";
   const md: string[] = [`# Session: ${session.name}`];
   if (session.project) md.push(`**Project**: ${session.project}`);

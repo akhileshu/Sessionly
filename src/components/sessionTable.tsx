@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { LS_KEY, useSessionStore } from "@/context/useSessionStore";
 import {
   closestCenter,
@@ -12,15 +18,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Button } from "./Button";
+import { Button } from "./shared/Button";
+import { Pill } from "./shared/pill";
 import { SortableRow } from "./SortableRow";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Pill } from "./pill";
 
 export function SessionTable() {
   const {

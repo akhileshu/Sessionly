@@ -4,10 +4,11 @@ import { useSessionStore } from "@/context/useSessionStore";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import { AppModal } from "./app-model/app-model";
-import { Button } from "./Button";
-import { Pill } from "./pill";
+import { getSessionMarkdown } from "./app-model/getSessionMarkdown";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
+import { Button } from "./shared/Button";
+import { Pill } from "./shared/pill";
 import { StartBreakButton } from "./StartBreakButton";
 import { TaskNotesSummary } from "./TaskNotesSummary";
 import { WorkTimerButton } from "./work-timer-button";
@@ -189,7 +190,9 @@ export default function SessionTracker({ className }: { className?: string }) {
                   .padStart(2, "0")}
               </div>
               <AppModal
-              className="min-w-3xl"
+                showMdCopyButton={true}
+                md={getSessionMarkdown(session)}
+                className="min-w-3xl"
                 trigger="Session Analytics"
                 type="viewSessionAnalytics"
               />
