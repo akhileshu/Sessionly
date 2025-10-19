@@ -21,6 +21,7 @@ import {
 import { Button } from "./shared/Button";
 import { Pill } from "./shared/pill";
 import { SortableRow } from "./SortableRow";
+import { useDeleteHandler } from "@/hooks/useDeleteHandler";
 
 export function SessionTable() {
   const {
@@ -34,6 +35,7 @@ export function SessionTable() {
   } = useSessionStore();
 
   if (!session) return null;
+  const { confirmable } = useDeleteHandler();
 
   function onDragEnd(e: { active: any; over: any }) {
     if (!session) return;
@@ -76,12 +78,12 @@ export function SessionTable() {
                 </Button>
                 <Button
                   icon="delete"
-                  onClick={() => {
+                  onClick={confirmable(() => {
                     setSession(null);
                     resetTimer();
 
                     localStorage.removeItem(LS_KEY);
-                  }}
+                  })}
                   variant="danger"
                 >
                   Remove session
@@ -119,7 +121,9 @@ export function SessionTable() {
                         blockDurationMin={session.blockDurationMin}
                         isCurrent={idx === timer.currentTaskIndex}
                         onChange={updateTask}
-                        onDelete={deleteTask}
+                        onDelete={confirmable((id: string) =>
+                          deleteTask(id)
+                        )}
                         isOdd={idx % 2 === 1}
                       />
                     ))}
