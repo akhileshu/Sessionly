@@ -100,7 +100,7 @@ export const SessionAnalytics = ({
                           outerRadius={80}
                           label
                         >
-                          {pieData.map((entry, index) => (
+                          {pieData.map((_entry, index) => (
                             <Cell
                               key={`cell-${index}`}
                               fill={index === 0 ? COLORS.work : COLORS.break}

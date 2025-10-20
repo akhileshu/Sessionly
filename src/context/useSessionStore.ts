@@ -404,7 +404,6 @@ export const useSessionStore = create<AppState>((set, get) => ({
       session,
       timer,
       setTimerState,
-      updateTask,
       resetTimer,
       pauseTimer,
     } = get();
@@ -419,7 +418,7 @@ export const useSessionStore = create<AppState>((set, get) => ({
       return;
     }
 
-    const nextTask = session.tasks[nextIdx];
+    // const nextTask = session.tasks[nextIdx];
     // if (!nextTask.startTime) {
     //   updateTask({ ...nextTask, startTime: new Date().toISOString() });
     // }

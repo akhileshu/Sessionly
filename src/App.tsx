@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { HelmetComponent } from "@/components/HelmetProvider";
 import "./App.css";
 import AppTour from "./components/AppTour";
 import SessionTracker from "./components/sessionTracker";
@@ -14,24 +15,27 @@ function App() {
 
   useEffect(() => loadFromStorage(), [loadFromStorage]);
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <DeleteDialogProvider>
-        <AppTourProvider>
-          <SidebarProvider defaultOpen={false}>
-            <div className="flex h-[calc(100vh-2rem)] m-4 border rounded-md ">
-              <main className="flex-1 overflow-y-auto">
-                <AppSidebar />
-                <div className="flex">
-                  <SidebarTrigger className="sidebar-trigger-outside" />
-                  <SessionTracker className="min-w-6xl" />
-                </div>
-                <AppTour />
-              </main>
-            </div>
-          </SidebarProvider>
-        </AppTourProvider>
-      </DeleteDialogProvider>
-    </ThemeProvider>
+    <>
+      <HelmetComponent />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <DeleteDialogProvider>
+          <AppTourProvider>
+            <SidebarProvider defaultOpen={false}>
+              <div className="flex h-[calc(100vh-2rem)] m-4 border rounded-md ">
+                <main className="flex-1 overflow-y-auto">
+                  <AppSidebar />
+                  <div className="flex">
+                    <SidebarTrigger className="sidebar-trigger-outside" />
+                    <SessionTracker className="min-w-6xl" />
+                  </div>
+                  <AppTour />
+                </main>
+              </div>
+            </SidebarProvider>
+          </AppTourProvider>
+        </DeleteDialogProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

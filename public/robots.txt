@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://akhileshu.github.io/Sessionly/sitemap.xml
+
+User-agent: Googlebot
+Disallow: /private
