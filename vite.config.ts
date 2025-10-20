@@ -18,6 +18,7 @@ export default defineConfig({
 
     ViteSitemap({
       hostname: "https://akhileshu.github.io/Sessionly",
+      dynamicRoutes: ["/"],
       generateRobotsTxt: true,
     }),
     createHtmlPlugin({
