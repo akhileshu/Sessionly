@@ -6,8 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { LS_KEY, useSessionStore } from "@/context/useSessionStore";
+import { useSessionStore } from "@/context/useSessionStore";
 import { useDeleteHandler } from "@/hooks/useDeleteHandler";
+import { useSessionUtils } from "@/lib/session-utils";
 import {
   closestCenter,
   DndContext,
@@ -47,6 +48,7 @@ export function SessionTable() {
 
     useSessionStore.getState().reorderTasks(oldIndex, newIndex);
   }
+  const { isSessionStarted } = useSessionUtils();
 
   const sensors = useSensors(useSensor(PointerSensor));
   return (
@@ -86,8 +88,6 @@ export function SessionTable() {
                   onClick={confirmable(() => {
                     setSession(null);
                     resetTimer();
-
-                    localStorage.removeItem(LS_KEY);
                   })}
                   variant="danger"
                 >
@@ -104,6 +104,7 @@ export function SessionTable() {
               <SortableContext
                 items={session.tasks.map((t) => t.id)}
                 strategy={verticalListSortingStrategy}
+                disabled={isSessionStarted}
               >
                 <table
                   className="w-full border-collapse table-auto mt-2 min-w-full text-sm text-left border shadow-sm

@@ -95,6 +95,12 @@ export const LS_META = "session-tracker-meta:v1";
 function uid(prefix = "") {
   return prefix + Math.random().toString(36).slice(2, 9);
 }
+const initialTimer: TimerState = {
+  running: false,
+  currentTaskIndex: null,
+  currentBlockRemainingSec: 0,
+  timerType: "work",
+};
 
 export const useSessionStore = create<AppState>((set, get) => ({
   // Initial state
@@ -106,12 +112,7 @@ export const useSessionStore = create<AppState>((set, get) => ({
   categoryInput: "",
   blockDurationMin: 25,
   breakDurationMin: 5,
-  timer: {
-    running: false,
-    currentTaskIndex: null,
-    currentBlockRemainingSec: 0,
-    timerType: "work",
-  },
+  timer: initialTimer,
 
   // Setters
   setSession: (session) => {
@@ -191,22 +192,48 @@ export const useSessionStore = create<AppState>((set, get) => ({
   },
 
   // Timer actions
-  setTimerState: (newState) =>
-    set((state) => ({ timer: { ...state.timer, ...newState } })),
+  // setTimerState: (newState) =>
+  //   set((state) => ({ timer: { ...state.timer, ...newState } })),
+  // startTimer: () =>
+  //   set((state) => ({ timer: { ...state.timer, running: true } })),
+  // pauseTimer: () =>
+  //   set((state) => ({ timer: { ...state.timer, running: false } })),
+  // resetTimer: () =>
+  //   set({
+  //     timer: {
+  //       running: false,
+  //       currentTaskIndex: null,
+  //       currentBlockRemainingSec: 0,
+  //       timerType: "work",
+  //     },
+  //   }),
+
+  setTimerState: (newState) => {
+    set((state) => {
+      const updatedTimer = { ...state.timer, ...newState };
+      updateTimerInLocalStorage(updatedTimer);
+      return { timer: updatedTimer };
+    });
+  },
 
   startTimer: () =>
-    set((state) => ({ timer: { ...state.timer, running: true } })),
-  pauseTimer: () =>
-    set((state) => ({ timer: { ...state.timer, running: false } })),
-  resetTimer: () =>
-    set({
-      timer: {
-        running: false,
-        currentTaskIndex: null,
-        currentBlockRemainingSec: 0,
-        timerType: "work",
-      },
+    set((state) => {
+      const updated = { ...state.timer, running: true };
+      updateTimerInLocalStorage(updated);
+      return { timer: updated };
     }),
+
+  pauseTimer: () =>
+    set((state) => {
+      const updated = { ...state.timer, running: false };
+      updateTimerInLocalStorage(updated);
+      return { timer: updated };
+    }),
+
+  resetTimer: () => {
+    updateTimerInLocalStorage(initialTimer);
+    set({ timer: initialTimer });
+  },
 
   // Business logic
   addProject: (project) => {
@@ -495,5 +522,26 @@ export const useSessionStore = create<AppState>((set, get) => ({
         console.error("Failed to parse session");
       }
     }
+    // 🧠 New: Restore timer
+    const timerRaw = localStorage.getItem("session-tracker-timer:v1");
+    if (timerRaw) {
+      try {
+        const timer = JSON.parse(timerRaw);
+        set({ timer });
+      } catch {
+        console.error("Failed to parse timer");
+      }
+    }
   },
 }));
+
+function updateTimerInLocalStorage(updatedTimer: TimerState) {
+  if (updatedTimer === initialTimer) {
+    localStorage.removeItem("session-tracker-timer:v1");
+    return;
+  }
+  localStorage.setItem(
+    "session-tracker-timer:v1",
+    JSON.stringify(updatedTimer)
+  );
+}

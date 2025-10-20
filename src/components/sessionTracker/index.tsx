@@ -3,15 +3,11 @@
 import { useSessionStore } from "@/context/useSessionStore";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import { AppModal } from "../app-model/app-model";
-import { getSessionMarkdown } from "../app-model/getSessionMarkdown";
 import { Button } from "../shared/Button";
-import { Pill } from "../shared/pill";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
-import { StartBreakButton } from "./StartBreakButton";
 import { TaskNotesSummary } from "./TaskNotesSummary";
-import { WorkTimerButton } from "./work-timer-button";
+import Timer from "./timer";
 
 export default function SessionTracker({ className }: { className?: string }) {
   const {
@@ -35,6 +31,10 @@ export default function SessionTracker({ className }: { className?: string }) {
     setTimerState,
     handleBlockEnd,
   } = useSessionStore();
+
+  const allTasksDone = session
+    ? session.tasks.every((task) => task.status === "done")
+    : false;
 
   // console.log("Zustand state useSessionStore:", useSessionStore());
 
@@ -131,69 +131,7 @@ export default function SessionTracker({ className }: { className?: string }) {
               afterNotes={session.tasks[timer.currentTaskIndex!]?.notesAfter}
             />
 
-            <div className="border p-2 rounded space-y-2 session-timer">
-              <Pill>Timer</Pill>
-              <div className="text-sm font-medium">
-                Status:{" "}
-                {timer.timerType === "work" ? "Work Time" : "Break Time"}
-                {timer.timerType === "break" &&
-                  !timer.running &&
-                  " (Ready to Start)"}
-              </div>
-
-              <div className="space-x-2">
-                {timer.timerType === "work" ? (
-                  // <Button icon={"MdOutlineWorkOutline"} onClick={handleStartPause} variant="primary">
-                  //   {timer.currentTaskIndex === null
-                  //     ? "Start Work"
-                  //     : timer.running
-                  //     ? "Pause"
-                  //     : "Resume"}
-                  // </Button>
-                  <WorkTimerButton />
-                ) : (
-                  <>
-                    {!timer.running ? (
-                      <StartBreakButton />
-                    ) : (
-                      <Button
-                        icon="pause"
-                        onClick={handleStartPause}
-                        variant="primary"
-                      >
-                        Pause Break
-                      </Button>
-                    )}
-                    {/* <Button onClick={handleStartWork} variant="primary">
-                      Skip to Work
-                    </Button> */}
-                  </>
-                )}
-              </div>
-
-              <div className="text-sm">
-                Current task:{" "}
-                {timer.currentTaskIndex !== null
-                  ? session.tasks[timer.currentTaskIndex]?.title
-                  : "—"}
-              </div>
-              <div className="text-2xl font-mono">
-                {Math.floor(timer.currentBlockRemainingSec / 60)
-                  .toString()
-                  .padStart(2, "0")}
-                :
-                {(timer.currentBlockRemainingSec % 60)
-                  .toString()
-                  .padStart(2, "0")}
-              </div>
-              <AppModal
-                showMdCopyButton={true}
-                md={getSessionMarkdown(session)}
-                className="min-w-3xl"
-                trigger="Session Analytics"
-                type="viewSessionAnalytics"
-              />
-            </div>
+            <Timer />
           </div>
         </div>
       ) : (
