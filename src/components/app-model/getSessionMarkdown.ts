@@ -23,9 +23,8 @@ export const getSessionMarkdown = (session: Session | null) => {
       md.push(`- Start: ${new Date(t.startTime).toLocaleTimeString()}`);
     if (t.endTime)
       md.push(`- End: ${new Date(t.endTime).toLocaleTimeString()}`);
-    if (t.notesBefore)
-      md.push("- Notes (before):", "```", t.notesBefore, "```");
-    if (t.notesAfter) md.push("- Notes (after):", "```", t.notesAfter, "```");
+    if (t.notesBefore) md.push("- Notes (before):", t.notesBefore);
+    if (t.notesAfter) md.push("- Notes (after):", t.notesAfter);
     md.push("");
   });
   return md.join("\n");

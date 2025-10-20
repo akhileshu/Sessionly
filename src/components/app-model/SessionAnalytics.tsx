@@ -53,8 +53,8 @@ export const SessionAnalytics = ({
       );
 
       const pieData = [
-        { name: "Work", value: totalWork },
-        { name: "Break", value: totalBreak },
+        { name: "Work", value: Number(totalWork.toFixed(2)) },
+        { name: "Break", value: Number(totalBreak.toFixed(2)) },
       ];
 
       const barData = workLogs.map((l) => ({
@@ -195,6 +195,7 @@ export const SessionAnalytics = ({
             content: (
               <MarkdownViewer
                 md={MarkdownViewerProps.md}
+                maxHeight
                 showMdCopyButton={MarkdownViewerProps.showMdCopyButton}
               />
             ),
