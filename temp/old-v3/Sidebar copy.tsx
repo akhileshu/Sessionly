@@ -17,12 +17,11 @@ import {
 import { useSessionStore } from "@/context/useSessionStore";
 import { useDeleteHandler } from "@/hooks/useDeleteHandler";
 import { cn } from "@/lib/utils";
-import { StartTourButton } from "../context/AppTourContext";
-import { AppModal } from "./app-model/app-model";
-import { PreferencesPanel } from "./sessionTracker/PreferencesPanel";
-import { Button } from "./shared/Button";
-import { Icon } from "./shared/icons";
-import { Pill } from "./shared/pill";
+import { AppModal } from "../../src/components/app-model/app-model";
+import { PreferencesPanel } from "../../src/components/sessionTracker/PreferencesPanel";
+import { Button } from "../../src/components/shared/Button";
+import { Icon } from "../../src/components/shared/icons";
+import { Pill } from "../../src/components/shared/pill";
 // -------------------- MAIN --------------------
 
 export function AppSidebar({ className }: { className?: string }) {
@@ -41,19 +40,12 @@ export function AppSidebar({ className }: { className?: string }) {
   return (
     <Sidebar className={cn("w-64 border-r", className)}>
       <SidebarHeader className="p-3">
-        <SidebarTrigger className="ml-auto sidebar-trigger-inside" />
+        <SidebarTrigger className="ml-auto" />
       </SidebarHeader>
 
       <SidebarContent className="space-y-4 px-3">
-        <Accordion
-          type="multiple"
-          className=""
-          defaultValue={[
-            "manage-projects-and-categories",
-            "manage-my-preferences",
-          ]}
-        >
-          <AccordionItem value="manage-projects-and-categories">
+        <Accordion type="single" collapsible className="">
+          <AccordionItem value="item-1">
             <AccordionTrigger>
               <Pill>Projects & Categories</Pill>
             </AccordionTrigger>
@@ -74,7 +66,7 @@ export function AppSidebar({ className }: { className?: string }) {
                     variant="primary"
                     icon="add"
                     size="sm"
-                    className="my-2 w-full add-sample-projects-and-categories"
+                    className="my-2 w-full"
                   >
                     Add Sample Projects & Categories
                   </Button>
@@ -97,7 +89,7 @@ export function AppSidebar({ className }: { className?: string }) {
               </SidebarGroup>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="manage-my-preferences">
+          <AccordionItem value="item-2">
             <AccordionTrigger>
               <Pill>My Preferences</Pill>
             </AccordionTrigger>
@@ -115,7 +107,6 @@ export function AppSidebar({ className }: { className?: string }) {
       </SidebarContent>
 
       <SidebarFooter className="p-3">
-        <StartTourButton />
         <Social />
       </SidebarFooter>
     </Sidebar>

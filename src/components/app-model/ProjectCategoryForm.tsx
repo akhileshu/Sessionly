@@ -29,6 +29,7 @@ export const ProjectCategoryForm: React.FC<ProjectCategoryFormProps> = ({}) => {
       <form onSubmit={handleAddProject} className="space-y-2">
         <Input
           placeholder="Add project"
+          className="m-1 mr-4"
           value={project}
           required
           onChange={(e) => setProject(e.target.value)}
@@ -38,6 +39,7 @@ export const ProjectCategoryForm: React.FC<ProjectCategoryFormProps> = ({}) => {
 
       <form onSubmit={handleAddCategory} className="space-y-2">
         <Input
+          className="m-1 mr-4"
           placeholder="Add category"
           value={category}
           required

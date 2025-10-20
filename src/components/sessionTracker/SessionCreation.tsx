@@ -1,9 +1,9 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Button } from "../shared/Button";
+import { Input } from "../shared/input";
 import { CategoryProjectSelect } from "./CategoryProjectSelect";
-import { Button } from "./shared/Button";
-import { Input } from "./shared/input";
 
 interface SessionCreationProps {
   session: any;
@@ -46,7 +46,7 @@ SessionCreationProps) {
   return (
     <form
       onSubmit={createSession}
-      className={cn("p-4 rounded-md border space-y-2", {
+      className={cn("p-4 rounded-md border space-y-2 create-session", {
         session: "pointer-events-none opacity-50",
       })}
     >

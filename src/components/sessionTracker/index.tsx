@@ -3,12 +3,12 @@
 import { useSessionStore } from "@/context/useSessionStore";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import { AppModal } from "./app-model/app-model";
-import { getSessionMarkdown } from "./app-model/getSessionMarkdown";
+import { AppModal } from "../app-model/app-model";
+import { getSessionMarkdown } from "../app-model/getSessionMarkdown";
+import { Button } from "../shared/Button";
+import { Pill } from "../shared/pill";
 import { SessionCreation } from "./SessionCreation";
 import { SessionTable } from "./sessionTable";
-import { Button } from "./shared/Button";
-import { Pill } from "./shared/pill";
 import { StartBreakButton } from "./StartBreakButton";
 import { TaskNotesSummary } from "./TaskNotesSummary";
 import { WorkTimerButton } from "./work-timer-button";
@@ -34,9 +34,6 @@ export default function SessionTracker({ className }: { className?: string }) {
     initSample,
     setTimerState,
     handleBlockEnd,
-    startBreakTimer,
-    startWorkTimer,
-    updateTask,
   } = useSessionStore();
 
   // console.log("Zustand state useSessionStore:", useSessionStore());
@@ -74,9 +71,9 @@ export default function SessionTracker({ className }: { className?: string }) {
   ]);
 
   // Manual work start function (for the UI)
-  const handleStartWork = () => {
-    startWorkTimer();
-  };
+  // const handleStartWork = () => {
+  //   startWorkTimer();
+  // };
 
   return (
     <div className={cn("p-4  space-y-4 ", className)}>
@@ -134,7 +131,7 @@ export default function SessionTracker({ className }: { className?: string }) {
               afterNotes={session.tasks[timer.currentTaskIndex!]?.notesAfter}
             />
 
-            <div className="border p-2 rounded space-y-2">
+            <div className="border p-2 rounded space-y-2 session-timer">
               <Pill>Timer</Pill>
               <div className="text-sm font-medium">
                 Status:{" "}
@@ -167,9 +164,9 @@ export default function SessionTracker({ className }: { className?: string }) {
                         Pause Break
                       </Button>
                     )}
-                    <Button onClick={handleStartWork} variant="primary">
+                    {/* <Button onClick={handleStartWork} variant="primary">
                       Skip to Work
-                    </Button>
+                    </Button> */}
                   </>
                 )}
               </div>
@@ -201,11 +198,14 @@ export default function SessionTracker({ className }: { className?: string }) {
         </div>
       ) : (
         <div className="border p-4 rounded text-center">
-          No session. Create one above or click{" "}
-          <Button onClick={initSample} variant="primary">
-            init sample
+          No session. Create one above or
+          <Button
+            className="init-sample-session ml-2"
+            onClick={initSample}
+            variant="primary"
+          >
+            Create Sample Session
           </Button>
-          .
         </div>
       )}
     </div>

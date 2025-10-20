@@ -1,6 +1,5 @@
 import { useUserPreferencesStore } from "@/context/useUserPreferencesStore";
 import { cn } from "@/lib/utils";
-import { Pill } from "./shared/pill";
 
 export function PreferencesPanel({ className }: { className?: string }) {
   const {

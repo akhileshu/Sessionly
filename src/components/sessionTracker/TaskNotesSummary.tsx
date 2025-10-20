@@ -1,5 +1,5 @@
-import { MarkdownViewer } from "./app-model/MarkdownViewer";
-import { Pill } from "./shared/pill";
+import { MarkdownViewer } from "../app-model/MarkdownViewer";
+import { Pill } from "../shared/pill";
 
 interface TaskNotesSummaryProps {
   beforeNotes?: string | null;
@@ -16,7 +16,7 @@ export function TaskNotesSummary({
     return <div className="text-sm text-gray-500">No running task</div>;
 
   return (
-    <div className="border p-3 rounded space-y-3 text-sm">
+    <div className="border p-3 rounded space-y-3 text-sm session-current-task-notes">
       <Pill>Task notes</Pill>
       {beforeNotes ? (
         <div>

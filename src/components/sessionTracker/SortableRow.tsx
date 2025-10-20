@@ -6,9 +6,9 @@ import { CSS } from "@dnd-kit/utilities";
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import { AppModal } from "./app-model/app-model";
-import { Icon } from "./shared/icons";
-import { Input } from "./shared/input";
+import { AppModal } from "../app-model/app-model";
+import { Icon } from "../shared/icons";
+import { Input } from "../shared/input";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -25,7 +25,6 @@ export const SortableRow: React.FC<{
   onChange,
   onDelete,
   className,
-  isOdd,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
@@ -37,25 +36,21 @@ export const SortableRow: React.FC<{
         ref={setNodeRef}
         style={style}
         className={cn(
-          "transition-colors bg-gray-900 text-gray-200 border-b border-gray-500",
+          "hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors",
           {
-            "bg-blue-500 text-white": isCurrent,
-            "bg-gray-950": isOdd,
+            "bg-blue-100 dark:bg-blue-900 text-gray-900 dark:text-white":
+              isCurrent,
           },
           className
         )}
       >
         {/* Drag handle */}
-        <td
-          {...attributes}
-          {...listeners}
-          className="px-2 py-1 cursor-grab text-center"
-        >
+        <td {...attributes} {...listeners} className="px-4 py-3 cursor-grab ">
           <Icon name="drag" />
         </td>
 
         {/* Task */}
-        <td className="px-2 py-1 w-64">
+        <td className="px-4 py-3 w-64">
           <Input
             value={task.title}
             onChange={(e) => onChange({ ...task, title: e.target.value })}
@@ -64,7 +59,7 @@ export const SortableRow: React.FC<{
         </td>
 
         {/* Blocks */}
-        <td className="px-2 py-1 w-24">
+        <td className="px-4 py-3 w-24">
           <Input
             type="number"
             min={1}
@@ -80,12 +75,18 @@ export const SortableRow: React.FC<{
         </td>
 
         {/* Duration */}
-        <td className="px-2 py-1 w-24 text-center">
-          {task.blocks * blockDurationMin} min
+        <td className="px-4 py-3 w-24 ">
+          <span
+            className="inline-flex items-center px-2 py-0.5 text-xs font-medium
+                                 bg-gray-100 dark:bg-gray-800 rounded text-gray-800 dark:text-gray-200"
+          >
+            {task.blocks * blockDurationMin} min
+          </span>
+          {/* {task.blocks * blockDurationMin} min */}
         </td>
 
         {/* Notes */}
-        <td className="px-2 py-1">
+        <td className="px-4 py-3">
           {!task.endTime ? (
             <Input
               placeholder="add before start notes"
@@ -108,7 +109,7 @@ export const SortableRow: React.FC<{
         </td>
 
         {/* Tags */}
-        <td className="px-2 py-1 w-48">
+        <td className="px-4 py-3 w-48">
           <Input
             placeholder="tags (comma separated)"
             value={task.tags?.join(", ") || ""}
@@ -126,15 +127,15 @@ export const SortableRow: React.FC<{
         </td>
 
         {/* Start / End */}
-        <td className="px-2 py-1 w-24 text-center">
+        <td className="px-4 py-3 w-24 text-gray-500 dark:text-gray-400 text-xs">
           {task.startTime ? new Date(task.startTime).toLocaleTimeString() : "-"}
         </td>
-        <td className="px-2 py-1 w-24 text-center">
+        <td className="px-4 py-3 w-24 text-gray-500 dark:text-gray-400 text-xs">
           {task.endTime ? new Date(task.endTime).toLocaleTimeString() : "-"}
         </td>
 
         {/* Delete */}
-        <td className="px-2 py-1 w-16 text-center">
+        <td className="px-4 py-3 w-16 ">
           <Icon
             name="delete"
             onClick={() => onDelete(task.id)}

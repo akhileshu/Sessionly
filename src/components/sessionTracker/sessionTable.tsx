@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LS_KEY, useSessionStore } from "@/context/useSessionStore";
+import { useDeleteHandler } from "@/hooks/useDeleteHandler";
 import {
   closestCenter,
   DndContext,
@@ -18,10 +19,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Button } from "./shared/Button";
-import { Pill } from "./shared/pill";
+import { Button } from "../shared/Button";
+import { Pill } from "../shared/pill";
 import { SortableRow } from "./SortableRow";
-import { useDeleteHandler } from "@/hooks/useDeleteHandler";
 
 export function SessionTable() {
   const {
@@ -50,8 +50,13 @@ export function SessionTable() {
 
   const sensors = useSensors(useSensor(PointerSensor));
   return (
-    <Accordion type="single" collapsible className="" defaultValue="item-1">
-      <AccordionItem value="item-1">
+    <Accordion
+      type="single"
+      collapsible
+      className=""
+      defaultValue="session-table"
+    >
+      <AccordionItem value="session-table">
         <AccordionTrigger>
           <div>
             <Pill>Sesion</Pill>
@@ -90,6 +95,7 @@ export function SessionTable() {
                 </Button>
               </div>
             </div>
+            {/* <GhTableWithData /> */}
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -99,21 +105,42 @@ export function SessionTable() {
                 items={session.tasks.map((t) => t.id)}
                 strategy={verticalListSortingStrategy}
               >
-                <table className="w-full border-collapse table-auto">
-                  <thead className="bg-gray-700 text-white text-sm">
-                    <tr>
-                      <th className="w-8 px-2 py-1">#</th>
-                      <th className="w-64 px-2 py-1 text-left">Task</th>
-                      <th className="w-24 px-2 py-1">Blocks</th>
-                      <th className="w-24 px-2 py-1">Duration</th>
-                      <th className="w-64 px-2 py-1">Notes</th>
-                      <th className="w-48 px-2 py-1">Tags</th>
-                      <th className="w-24 px-2 py-1">Start</th>
-                      <th className="w-24 px-2 py-1">End</th>
-                      <th className="w-16 px-2 py-1">Delete</th>
+                <table
+                  className="w-full border-collapse table-auto mt-2 min-w-full text-sm text-left border shadow-sm
+                        bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 rounded-md"
+                >
+                  <thead className=" bg-gray-50 dark:bg-gray-800 ">
+                    <tr className="">
+                      <th className="w-8 px-4 py-2 font-medium text-gray-700 dark:text-gray-300 ">
+                        #
+                      </th>
+                      <th className="w-64 px-4 py-2 font-medium text-gray-700 dark:text-gray-300 text-left">
+                        Task
+                      </th>
+                      <th className="w-24 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Blocks
+                      </th>
+                      <th className="w-24 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Duration
+                      </th>
+                      <th className="w-64 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Notes
+                      </th>
+                      <th className="w-48 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Tags
+                      </th>
+                      <th className="w-24 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Start
+                      </th>
+                      <th className="w-24 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        End
+                      </th>
+                      <th className="w-16 px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        Delete
+                      </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {session.tasks.map((t, idx) => (
                       <SortableRow
                         key={t.id}
@@ -121,32 +148,34 @@ export function SessionTable() {
                         blockDurationMin={session.blockDurationMin}
                         isCurrent={idx === timer.currentTaskIndex}
                         onChange={updateTask}
-                        onDelete={confirmable((id: string) =>
-                          deleteTask(id)
-                        )}
+                        onDelete={confirmable((id: string) => deleteTask(id))}
                         isOdd={idx % 2 === 1}
                       />
                     ))}
                   </tbody>
-                  <tfoot className="bg-gray-700 text-white text-sm font-medium">
+                  <tfoot className="  bg-gray-50 dark:bg-gray-800 text-sm font-medium">
                     <tr>
-                      <td className="px-2 py-1">#</td>
-                      <td className="px-2 py-1">{session.tasks.length}</td>
-                      <td className="px-2 py-1">
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        #
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
+                        {session.tasks.length}
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
                         {session.tasks.reduce((sum, t) => sum + t.blocks, 0)}
                       </td>
-                      <td className="px-2 py-1">
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300">
                         {session.tasks.reduce(
                           (sum, t) => sum + t.blocks * session.blockDurationMin,
                           0
                         )}{" "}
                         min
                       </td>
-                      <td className="px-2 py-1"></td>
-                      <td className="px-2 py-1"></td>
-                      <td className="px-2 py-1"></td>
-                      <td className="px-2 py-1"></td>
-                      <td className="px-2 py-1"></td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300"></td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300"></td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300"></td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300"></td>
+                      <td className="px-4 py-2 font-medium text-gray-700 dark:text-gray-300"></td>
                     </tr>
                   </tfoot>
                 </table>

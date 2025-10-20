@@ -1,6 +1,6 @@
 import { useSessionStore } from "@/context/useSessionStore";
-import { Button } from "./shared/Button";
-import type { IconName } from "./shared/icons";
+import { Button } from "../shared/Button";
+import type { IconName } from "../shared/icons";
 
 export function WorkTimerButton() {
   const { handleStartPause, timer } = useSessionStore();
