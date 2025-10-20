@@ -5,11 +5,11 @@ import { CSS } from "@dnd-kit/utilities";
 
 import React from "react";
 
+import { useSessionUtils } from "@/lib/session-utils";
 import { cn } from "@/lib/utils";
-import { AppModal } from "../app-model/app-model";
+import { AppModal } from "../app-model";
 import { Icon } from "../shared/icons";
 import { Input } from "../shared/input";
-import { useSessionUtils } from "@/lib/session-utils";
 
 export const SortableRow: React.FC<{
   task: Task;
@@ -19,18 +19,11 @@ export const SortableRow: React.FC<{
   onDelete: (id: string) => void;
   className?: string;
   isOdd?: boolean;
-}> = ({
-  task,
-  blockDurationMin,
-  isCurrent,
-  onChange,
-  onDelete,
-  className,
-}) => {
+}> = ({ task, blockDurationMin, isCurrent, onChange, onDelete, className }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
   const style = { transform: CSS.Transform.toString(transform), transition };
-  const {isSessionStarted} = useSessionUtils()
+  const { isSessionStarted } = useSessionUtils();
   return (
     <>
       <tr
@@ -49,13 +42,18 @@ export const SortableRow: React.FC<{
         <td
           {...attributes}
           {...listeners}
-          className={cn("px-4 py-3 cursor-grab ",{
-            "cursor-not-allowed": isSessionStarted
+          className={cn("px-4 py-3 cursor-grab ", {
+            "cursor-not-allowed": isSessionStarted,
           })}
         >
-          <Icon title={
-            isSessionStarted ? "You can't reorder tasks while the session is started" : "Drag to reorder tasks"
-          } name="drag" />
+          <Icon
+            title={
+              isSessionStarted
+                ? "You can't reorder tasks while the session is started"
+                : "Drag to reorder tasks"
+            }
+            name="drag"
+          />
         </td>
 
         {/* Task */}

@@ -340,16 +340,17 @@ export const useSessionStore = create<AppState>((set, get) => ({
 
     if (!session || session.tasks.length === 0) return;
 
+    
     // If no task started yet, start the first one
     if (timer.currentTaskIndex === null) {
       const firstIdx = session.tasks.findIndex((t) => t.status !== "done");
       if (firstIdx === -1) return; // all done
-
+      
       const task = session.tasks[firstIdx];
       if (!task.startTime) {
         updateTask({ ...task, startTime: new Date().toISOString() });
       }
-
+      
       setTimerState({
         currentTaskIndex: firstIdx,
         timerType: "work",
@@ -358,12 +359,16 @@ export const useSessionStore = create<AppState>((set, get) => ({
       });
       return;
     }
-
+    
     // Toggle running state
     if (timer.running) {
       pauseTimer();
     } else {
       startTimer();
+      const task = session.tasks[timer.currentTaskIndex];
+      if (!task.startTime) {
+        updateTask({ ...task, startTime: new Date().toISOString() });
+      }
     }
   },
 
@@ -415,9 +420,9 @@ export const useSessionStore = create<AppState>((set, get) => ({
     }
 
     const nextTask = session.tasks[nextIdx];
-    if (!nextTask.startTime) {
-      updateTask({ ...nextTask, startTime: new Date().toISOString() });
-    }
+    // if (!nextTask.startTime) {
+    //   updateTask({ ...nextTask, startTime: new Date().toISOString() });
+    // }
 
     setTimerState({
       currentTaskIndex: nextIdx,
@@ -438,16 +443,17 @@ export const useSessionStore = create<AppState>((set, get) => ({
     const task = session.tasks[timer.currentTaskIndex];
 
     if (timer.timerType === "work") {
+      const taskBlocksLeft = Math.max(0, task.blocks - 1);
       // Work block finished
-      const updatedTask = { ...task, blocks: Math.max(0, task.blocks - 1) };
+      const updatedTask = { ...task };
 
       // If task is completely done
-      if (updatedTask.blocks === 0) {
+      if (taskBlocksLeft === 0) {
         updatedTask.status = "done";
         updatedTask.endTime = new Date().toISOString();
+        updateTask(updatedTask);
       }
 
-      updateTask(updatedTask);
 
       // If break is needed and task still has blocks remaining
       if (/*updatedTask.blocks > 0 && */ session.breakDurationMin > 0) {

@@ -18,7 +18,7 @@ import { useSessionStore } from "@/context/useSessionStore";
 import { useDeleteHandler } from "@/hooks/useDeleteHandler";
 import { cn } from "@/lib/utils";
 import { StartTourButton } from "../context/AppTourContext";
-import { AppModal } from "./app-model/app-model";
+import { AppModal } from "./app-model";
 import { PreferencesPanel } from "./sessionTracker/PreferencesPanel";
 import { Button } from "./shared/Button";
 import { Icon } from "./shared/icons";

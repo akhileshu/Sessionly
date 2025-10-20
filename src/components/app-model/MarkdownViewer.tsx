@@ -5,7 +5,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import React from "react";
 import { Button } from "../shared/Button";
 
-interface MarkdownViewerProps {
+export interface MarkdownViewerProps {
   md: string;
   showMdCopyButton?: boolean;
 }

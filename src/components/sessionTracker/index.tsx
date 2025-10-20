@@ -26,15 +26,10 @@ export default function SessionTracker({ className }: { className?: string }) {
     setBlockDurationMin,
     setBreakDurationMin,
     createSession,
-    handleStartPause,
     initSample,
     setTimerState,
     handleBlockEnd,
   } = useSessionStore();
-
-  const allTasksDone = session
-    ? session.tasks.every((task) => task.status === "done")
-    : false;
 
   // console.log("Zustand state useSessionStore:", useSessionStore());
 

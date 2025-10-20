@@ -1,5 +1,5 @@
 import { useSessionStore } from "@/context/useSessionStore";
-import { AppModal } from "../app-model/app-model";
+import { AppModal } from "../app-model";
 import { getSessionMarkdown } from "../app-model/getSessionMarkdown";
 import { Button } from "../shared/Button";
 import { Pill } from "../shared/pill";
@@ -75,7 +75,6 @@ function Timer() {
       <AppModal
         showMdCopyButton={true}
         md={getSessionMarkdown(session)}
-        className="min-w-3xl"
         trigger="Session Analytics"
         type="viewSessionAnalytics"
       />

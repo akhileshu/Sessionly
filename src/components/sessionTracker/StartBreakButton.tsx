@@ -1,7 +1,7 @@
 "use client";
 import { useSessionStore } from "@/context/useSessionStore";
 import React from "react";
-import { AppModal } from "../app-model/app-model";
+import { AppModal } from "../app-model";
 import { Button } from "../shared/Button";
 
 interface StartBreakButtonProps {}
